@@ -28,15 +28,22 @@ rsq = proc_rSquareSigned(epo);
 amp = proc_meanAcrossTime(epo,opt.cfy_rp.ival_amp);
 
 %% visualize ERPs
-figure
-H = grid_plot(epo,mnt,'PlotStat','sem');%,'ShrinkAxes',[.9 .9]);
-grid_addBars(rsq,'HScale',H.scale,'Height',1/7);
+%figure
+%H = grid_plot(epo,mnt,'PlotStat','sem');%,'ShrinkAxes',[.9 .9]);
+%grid_addBars(rsq,'HScale',H.scale,'Height',1/7);
 
 %% channel selection
-[~,pval1] = ttest(squeeze(amp.x(1,:,logical(amp.y(2,:))))',0,'tail','left'); % RP amplitudes must be smaller than zero
-[~,pval2] = ttest2(squeeze(amp.x(1,:,logical(amp.y(2,:))))',...
-    squeeze(amp.x(1,:,logical(amp.y(1,:))))',...
-    'tail','left'); % RP amplitudes must be smaller than No-RP amplitudes
+if verLessThan('matlab', '8.4')
+    [~,pval1] = ttest(squeeze(amp.x(1,:,logical(amp.y(2,:))))',0,.05,'left'); % RP amplitudes must be smaller than zero
+    [~,pval2] = ttest2(squeeze(amp.x(1,:,logical(amp.y(2,:))))',...
+        squeeze(amp.x(1,:,logical(amp.y(1,:))))',.05,...
+        'left'); % RP amplitudes must be smaller than No-RP amplitudes
+else
+    [~,pval1] = ttest(squeeze(amp.x(1,:,logical(amp.y(2,:))))',0,'tail','left'); % RP amplitudes must be smaller than zero
+    [~,pval2] = ttest2(squeeze(amp.x(1,:,logical(amp.y(2,:))))',...
+        squeeze(amp.x(1,:,logical(amp.y(1,:))))',...
+        'tail','left'); % RP amplitudes must be smaller than No-RP amplitudes
+end
 chanind_sel = pval1<.05&pval2<.05;
 opt.cfy_rp.clab = amp.clab(chanind_sel);
 fprintf('\nSelected channels:\n')
@@ -44,7 +51,7 @@ fprintf('%s\n',opt.cfy_rp.clab{:})
 
 %% define online filter
 % reload data
-cnt = proc_loadDataset(subj_code,'Phase1');
+cnt = proc_loadDataset(subj_code,'selfpaced');
 
 % define online spatial filter
 Nc = length(cnt.clab);
@@ -73,6 +80,9 @@ fprintf('\nClassification accuracy: %2.1f%%\n',100*(1-loss))
 [cnt,mrk] = proc_loadDataset(subj_code,'random');
 cnt = proc_linearDerivation(cnt,opt.acq.A);
 mrk = amp_unifyMarkers(mrk,'light');
+%%%%%%%%%%
+mrk = mrk_selectEvents(mrk,1:238);
+%%%%%%%%%%
 must_contain = 'light';
 trial_mrk = mrk_getTrialMarkers(mrk,must_contain);
 mrk = mrk_selectEvents(mrk,[trial_mrk{:}]);
@@ -83,7 +93,7 @@ opt2 = struct('ivals_fv',opt.cfy_rp.ival_fv,'baseln_len',opt.cfy_rp.baseln_len,'
 cout = proc_slidingClassification(cnt,mrk_,opt2,opt.cfy_rp.C);
 
 %% define threshold
-[thresh_pos,thresh_neg] = amp_findCoutThresh(cout,target_ISI);
+[thresh_pos,thresh_neg] = amp_findCoutThresh(cout,opt.pred.target_isi);
 opt.pred.thresh_pos = thresh_pos;
 opt.pred.thresh_neg = thresh_neg;
 
