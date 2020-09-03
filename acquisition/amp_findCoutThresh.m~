@@ -1,0 +1,27 @@
+
+function [thresh_move,thresh_idle] = amp_findCoutThresh(C,)
+
+%% define possible threshold range
+x_all = cellfun(@(f)f.x,C,'UniformOutput',false);
+x_all = [x_all{:}];
+thresh = linspace(prctile(x_all,1),prctile(x_all,99),200);
+
+%%
+Nth = length(thresh);
+Nt = length(C);
+X = [];
+for jj = 1:Nt
+    tind = C{jj}.t<=0;
+    x = C{jj}.x(tind);
+    X = cat(1,X,x');
+end
+Ttot = length(X)/100;
+R = zeros(Nth,1);
+for kk = 1:Nth
+    ind = find(diff(sign(X-thresh(kk)))==2);
+    R(kk) = Ttot/length(ind);
+end
+
+%%
+thresh_move = thresh(find(diff(sign(R-5))==2));
+thresh_idle = thresh(find(diff(sign(R-5))==-2));
