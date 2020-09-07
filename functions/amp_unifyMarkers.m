@@ -1,17 +1,24 @@
 
-function mrk = amp_unifyMarkers(mrk,type,cl_target)
+function mrk = amp_unifyMarkers(mrk,type)
 % Unifies marker families
 
 switch type
     case 'light'
         cl_orig = {'light move red','light move green','light move yellow',...
                    'light idle red','light idle green','light idle yellow'};
+    case 'light idle'
+        cl_orig = {'light idle red','light idle green','light idle yellow'};
+    case 'light move'
+        cl_orig = {'light move red','light move green','light move yellow'};
+    case 'light both'
+        mrk = amp_unifyMarkers(mrk,'light move');
+        mrk = amp_unifyMarkers(mrk,'light idle');
+        return
     otherwise
         error('Unknown unification indentifier.')
 end
-if nargin < 3
-    cl_target = type;
-end
+
+cl_target = type;
 
 ci_orig = [];
 for ii = 1:length(cl_orig)
