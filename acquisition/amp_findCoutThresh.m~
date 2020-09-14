@@ -1,10 +1,10 @@
 
-function [thresh_move,thresh_idle] = amp_findCoutThresh(C,)
+function [thresh_move,thresh_idle] = amp_findCoutThresh(C,target_ISI)
 
 %% define possible threshold range
 x_all = cellfun(@(f)f.x,C,'UniformOutput',false);
 x_all = [x_all{:}];
-thresh = linspace(prctile(x_all,1),prctile(x_all,99),200);
+thresh = linspace(prctile(x_all,1),prctile(x_all,99.5),200);
 
 %%
 Nth = length(thresh);
@@ -23,5 +23,5 @@ for kk = 1:Nth
 end
 
 %%
-thresh_move = thresh(find(diff(sign(R-5))==2));
-thresh_idle = thresh(find(diff(sign(R-5))==-2));
+thresh_move = thresh(find(diff(sign(R - target_ISI))==2));
+thresh_idle = thresh(find(diff(sign(R - target_ISI))==-2));
