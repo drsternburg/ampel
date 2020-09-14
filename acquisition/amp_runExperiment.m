@@ -1,5 +1,4 @@
 
-amp_setupEnvironment;
 global opt
 
 %% Setup participant
@@ -13,7 +12,7 @@ opt.feedback_params.end_after_x_events = int16(50);
 opt.feedback_params.pause_every_x_events = int16(25);
 amp_startRecording('selfpaced')
 
-%% Block 2: traffic-light (random)
+%% Block 2: traffic-light task (random)
 opt.feedback_params.mode = int16(2);
 opt.feedback_params.listen_to_keyboard = int16(0);
 opt.feedback_params.end_pause_counter_type = int16(6); % random lights
@@ -32,7 +31,7 @@ amp_setupOnlineClassifier(BTB.Tp.Code);
 
 save([fullfile(BTB.Tp.Dir,opt.session_name) '_' BTB.Tp.Code '_opt'],'opt')
 
-%% Block 3: traffic-light (BCI)
+%% Block 3: traffic-light task (BCI)
 opt.feedback_params.mode = int16(3);
 opt.feedback_params.listen_to_keyboard = int16(0);
 opt.feedback_params.end_pause_counter_type = int16(7); % BCI lights

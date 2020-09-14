@@ -28,9 +28,9 @@ rsq = proc_rSquareSigned(epo);
 amp = proc_meanAcrossTime(epo,opt.cfy_rp.ival_amp);
 
 %% visualize ERPs
-%figure
-%H = grid_plot(epo,mnt,'PlotStat','sem');%,'ShrinkAxes',[.9 .9]);
-%grid_addBars(rsq,'HScale',H.scale,'Height',1/7);
+figure
+H = grid_plot(epo,mnt,'PlotStat','sem');%,'ShrinkAxes',[.9 .9]);
+grid_addBars(rsq,'HScale',H.scale,'Height',1/7);
 
 %% channel selection
 if verLessThan('matlab', '8.4')
@@ -80,9 +80,6 @@ fprintf('\nClassification accuracy: %2.1f%%\n',100*(1-loss))
 [cnt,mrk] = proc_loadDataset(subj_code,'random');
 cnt = proc_linearDerivation(cnt,opt.acq.A);
 mrk = amp_unifyMarkers(mrk,'light');
-%%%%%%%%%%
-mrk = mrk_selectEvents(mrk,1:238);
-%%%%%%%%%%
 must_contain = 'light';
 trial_mrk = mrk_getTrialMarkers(mrk,must_contain);
 mrk = mrk_selectEvents(mrk,[trial_mrk{:}]);

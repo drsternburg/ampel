@@ -275,6 +275,7 @@ class TrafficLight_decide(PygameFeedback):
                 self.this_cue_time = self.queue_waittime.pop()
                 self.log('Trial %d | %s | Presenting cue in %02.1f sec...' % (self.trial_counter+1,self.this_interruption_color,self.this_cue_time/1000))
             elif self.mode==3:
+                self.this_interruption_marker = self.this_interruption_marker + 3 # so 1-6 become 4-9
                 if (self.this_trial_type==1) or (self.this_trial_type==2) or (self.this_trial_type==3):
                     self.log('Trial %d | RP+ | %s | Listening to classifier...' % (self.trial_counter+1,self.this_interruption_color))
                 else:
