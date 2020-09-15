@@ -78,20 +78,15 @@ opt.acq.A = eye(Nc,Nc);
 opt.acq.A(rc,rrc) = opt.acq.A(rc,rrc) - 1/length(rc);
 opt.acq.A = opt.acq.A(:,rrc);
 
-opt.cfy_rp.baseln_len = 100;
+opt.cfy_rp.baseln_len = 200;
 opt.cfy_rp.baseln_pos = 'beginning';
-opt.cfy_rp.ival_fv = [-1200 -1100;
-                      -1100 -1000;
-                      -1000 -900;
-                       -900 -800;
-                       -800 -700;
-                       -700 -600;
-                       -600 -500;
-                       -500 -400;
-                       -400 -300;
-                       -300 -200;
-                       -200 -100;
-                       -100   0];
+opt.cfy_rp.ival_fv = [-1400 -1200;
+                      -1200 -1000;
+                      -1000  -800;
+                       -800  -600;
+                       -600  -400;
+                       -400  -200;
+                       -200     0];
 opt.cfy_rp.fv_window = [opt.cfy_rp.ival_fv(1) 0];
 
 opt.cfy_rp.ival_amp = [-200 0];
@@ -108,7 +103,7 @@ opt.cfy_acc.offset = 500;
 %% parameters for finding optimal prediction threshold
 opt.pred.thresh_pos = 1; % for the fake classifier of phase 1
 opt.pred.thresh_neg = -1; % for the fake classifier of phase 1
-opt.pred.target_isi = 5; % seconds
+opt.pred.target_isi = 3; % seconds
 
 
 

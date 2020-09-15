@@ -5,14 +5,18 @@ function mrk = amp_unifyMarkers(mrk,type)
 switch type
     case 'light'
         cl_orig = {'light move red','light move green','light move yellow',...
-                   'light idle red','light idle green','light idle yellow'};
+                   'light idle red','light idle green','light idle yellow',...
+                   'light random red','light random green','light random yellow'};
     case 'light idle'
         cl_orig = {'light idle red','light idle green','light idle yellow'};
     case 'light move'
         cl_orig = {'light move red','light move green','light move yellow'};
-    case 'light both'
+    case 'light random'
+        cl_orig = {'light random red','light random green','light random yellow'};
+    case 'light all'
         mrk = amp_unifyMarkers(mrk,'light move');
         mrk = amp_unifyMarkers(mrk,'light idle');
+        mrk = amp_unifyMarkers(mrk,'light random');
         return
     otherwise
         error('Unknown unification indentifier.')

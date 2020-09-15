@@ -14,7 +14,7 @@ Nth = 100;
 thresh = linspace(prctile(X,1),prctile(X,99),Nth);
 
 Ncr = zeros(Nth,2);
-minp = 1;
+minp = 7;
 for kk = 1:Nth
     
     ind1 = find(X<thresh(kk),1,'first');

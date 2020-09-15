@@ -4,11 +4,22 @@ global opt
 %% Setup participant
 acq_makeDataFolder;
 
+%% test trigger
+bbci_trigger_parport(34,BTB.Acq.IoLib,BTB.Acq.IoAddr);
+
+%% Block 1: self-paced task TEST
+opt.feedback_params.mode = int16(1);
+opt.feedback_params.listen_to_keyboard = int16(0);
+opt.feedback_params.end_pause_counter_type = int16(1); % pedal presses
+opt.feedback_params.end_after_x_events = int16(6);
+opt.feedback_params.pause_every_x_events = int16(3);
+amp_startRecording('selfpacedtest')
+
 %% Block 1: self-paced task
 opt.feedback_params.mode = int16(1);
 opt.feedback_params.listen_to_keyboard = int16(0);
 opt.feedback_params.end_pause_counter_type = int16(1); % pedal presses
-opt.feedback_params.end_after_x_events = int16(50);
+opt.feedback_params.end_after_x_events = int16(75);
 opt.feedback_params.pause_every_x_events = int16(25);
 amp_startRecording('selfpaced')
 
@@ -34,8 +45,8 @@ save([fullfile(BTB.Tp.Dir,opt.session_name) '_' BTB.Tp.Code '_opt'],'opt')
 %% Block 3: traffic-light task (BCI)
 opt.feedback_params.mode = int16(3);
 opt.feedback_params.listen_to_keyboard = int16(0);
-opt.feedback_params.end_pause_counter_type = int16(7); % BCI lights
-opt.feedback_params.end_after_x_events = int16(40);
-opt.feedback_params.pause_every_x_events = int16(40);
-opt.feedback_params.trial_assignment = int16(amp_drawTrialAssignments(250,[1/8 1/8 1/4 1/8 1/8 1/4])+3);
-amp_startRecording('bci')
+opt.feedback_params.end_pause_counter_type = int16(5); % trials
+opt.feedback_params.end_after_x_events = int16(100);
+opt.feedback_params.pause_every_x_events = int16(25);
+opt.feedback_params.trial_assignment = int16(amp_drawTrialAssignments(250,[1/8 1/8 1/4 1/8 1/8 1/4]));
+amp_startRecording('bci2')

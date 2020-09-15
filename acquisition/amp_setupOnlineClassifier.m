@@ -90,7 +90,7 @@ opt2 = struct('ivals_fv',opt.cfy_rp.ival_fv,'baseln_len',opt.cfy_rp.baseln_len,'
 cout = proc_slidingClassification(cnt,mrk_,opt2,opt.cfy_rp.C);
 
 %% define threshold
-[thresh_pos,thresh_neg] = amp_findCoutThresh(cout,opt.pred.target_isi);
+[thresh_pos,thresh_neg] = amp_findCoutThresh_v2(cout,opt.pred.target_isi);
 opt.pred.thresh_pos = thresh_pos;
 opt.pred.thresh_neg = thresh_neg;
 

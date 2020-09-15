@@ -176,14 +176,14 @@ class TrafficLight_decide(PygameFeedback):
                 self.random_counter += 1
                 self.do_interruption()
             # it's time to end a BCI trial (too long waiting time)
-            if self.mode==1 and self.on_trial and not self.already_interrupted and now > self.this_start_time + self.max_waittime;
+            if self.mode==3 and self.on_trial and not self.already_interrupted and now > self.this_start_time + self.max_waittime:
                 # reassign random marker to light
                 if self.this_interruption_color=='red':
-                    self.this_interruption_marker = self.marker_base_interruption+1;
+                    self.this_interruption_marker = self.marker_base_interruption+1
                 elif self.this_interruption_color=='green':
-                    self.this_interruption_marker = self.marker_base_interruption+2;
+                    self.this_interruption_marker = self.marker_base_interruption+2
                 elif self.this_interruption_color=='yellow':
-                    self.this_interruption_marker = self.marker_base_interruption+3;
+                    self.this_interruption_marker = self.marker_base_interruption+3
                 self.random_counter += 1
                 self.do_interruption()
             # update traffic light
