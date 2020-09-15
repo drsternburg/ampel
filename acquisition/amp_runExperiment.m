@@ -29,7 +29,7 @@ opt.feedback_params.listen_to_keyboard = int16(0);
 opt.feedback_params.end_pause_counter_type = int16(6); % random lights
 opt.feedback_params.end_after_x_events = int16(50);
 opt.feedback_params.pause_every_x_events = int16(25);
-opt.feedback_params.cue_waittime = amp_drawCueTimes(100,[4000 10000]);
+opt.feedback_params.cue_waittime = amp_drawCueTimes(100,[4000 8000]);
 opt.feedback_params.trial_assignment = int16(amp_drawTrialAssignments(100,[1/4 1/4 1/2]));
 amp_startRecording('random')
 
@@ -49,4 +49,4 @@ opt.feedback_params.end_pause_counter_type = int16(5); % trials
 opt.feedback_params.end_after_x_events = int16(100);
 opt.feedback_params.pause_every_x_events = int16(25);
 opt.feedback_params.trial_assignment = int16(amp_drawTrialAssignments(250,[1/8 1/8 1/4 1/8 1/8 1/4]));
-amp_startRecording('bci2')
+amp_startRecording('bci3')

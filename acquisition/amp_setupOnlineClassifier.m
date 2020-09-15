@@ -2,6 +2,7 @@
 function amp_setupOnlineClassifier(subj_code)
 
 global opt
+warning off
 
 %% load and prepare self-paced data
 [cnt,mrk,mnt] = proc_loadDataset(subj_code,'selfpaced');
@@ -90,7 +91,9 @@ opt2 = struct('ivals_fv',opt.cfy_rp.ival_fv,'baseln_len',opt.cfy_rp.baseln_len,'
 cout = proc_slidingClassification(cnt,mrk_,opt2,opt.cfy_rp.C);
 
 %% define threshold
-[thresh_pos,thresh_neg] = amp_findCoutThresh_v2(cout,opt.pred.target_isi);
+[thresh_pos,thresh_neg] = amp_findCoutThresh(cout,opt.pred.target_isi);
+%[thresh_pos,thresh_neg] = amp_findCoutThresh_v2(cout,opt.pred.target_isi);
+%[thresh_pos,thresh_neg] = amp_findCoutThresh_v3(cout);
 opt.pred.thresh_pos = thresh_pos;
 opt.pred.thresh_neg = thresh_neg;
 
