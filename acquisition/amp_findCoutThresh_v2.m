@@ -13,7 +13,7 @@ end
 Nth = 100;
 thresh = linspace(prctile(X,1),prctile(X,99),Nth);
 
-Ncr = zeros(Nth,2);
+Ncr = nan(Nth,2);
 minp = 7;
 for kk = 1:Nth
     
@@ -23,7 +23,9 @@ for kk = 1:Nth
     df = diff(sign(x-thresh(kk)));
     t1 = find(df==2);
     t2 = find(df==-2);
-    Ncr(kk,1) = sum((t2-t1)>minp);
+    if numel(t1)==numel(t2)
+        Ncr(kk,1) = sum((t2-t1)>minp);
+    end
     
     ind1 = find(X>thresh(kk),1,'first');
     ind2 = find(X>thresh(kk),1,'last');
@@ -31,7 +33,9 @@ for kk = 1:Nth
     df = diff(sign(x-thresh(kk)));
     t1 = find(df==2);
     t2 = find(df==-2);
-    Ncr(kk,2) = sum((t1-t2)>minp);
+    if numel(t1)==numel(t2)
+       Ncr(kk,2) = sum((t1-t2)>minp);
+    end
     
 end
 

@@ -1,5 +1,5 @@
 
-VPCode = 'VPabaa';
+VPCode = 'VPabac';
 
 %% grid plot (self-paced phase)
 [cnt,mrk,mnt] = proc_loadDataset(VPCode,'selfpaced');
@@ -16,8 +16,8 @@ grid_addBars(rsq,'HScale',H.scale,'Height',1/7);
 %% grid plot (random phase)
 [cnt,mrk,mnt] = proc_loadDataset(VPCode,'random');
 
-mrk = amp_unifyMarkers(mrk,'light move');
-mrk = mrk_selectClasses(mrk,{'light move'});
+mrk = amp_unifyMarkers(mrk,'light random');
+mrk = mrk_selectClasses(mrk,{'light random'});
 epo = proc_segmentation(cnt,mrk,[-1200 0]);
 epo = proc_baseline(epo,100,'beginning');
 
@@ -25,11 +25,12 @@ figure
 H = grid_plot(epo,mnt,'PlotStat','sem','ShrinkAxes',[.9 .9]);
 
 %% grid plot (3 runs of BCI phase)
-for jj = 1:3
+phase = {'bci2','bci3'};
+for jj = 1:length(phase)
     
-    [cnt,mrk,mnt] = proc_loadDataset(VPCode,sprintf('bci%d',jj));
+    [cnt,mrk,mnt] = proc_loadDataset(VPCode,phase{jj});
     
-    mrk = amp_unifyMarkers(mrk,'light both');
+    mrk = amp_unifyMarkers(mrk,'light all');
     mrk = mrk_selectClasses(mrk,{'light move','light idle'});
     epo = proc_segmentation(cnt,mrk,[-1200 0]);
     epo = proc_baseline(epo,100,'beginning');
@@ -46,10 +47,11 @@ IT = [];
 G1 = [];
 G2 = [];
 light = {'light move','light idle'};
-for jj = 1:3
+phase = {'bci2','bci3'};
+for jj = 1:length(phase)
     
-    [cnt,mrk,mnt] = proc_loadDataset(VPCode,sprintf('bci%d',jj));
-    mrk = amp_unifyMarkers(mrk,'light both');
+    [cnt,mrk,mnt] = proc_loadDataset(VPCode,phase{jj});
+    mrk = amp_unifyMarkers(mrk,'light all');
     
     for kk = 1:2
         trial = mrk_getTrialMarkers(mrk,light{kk});
@@ -57,7 +59,7 @@ for jj = 1:3
         mrk2 = mrk_selectClasses(mrk2,{'trial start',light{kk}});
         IT = cat(1,IT,(mrk2.time(logical(mrk2.y(2,:)))-mrk2.time(logical(mrk2.y(1,:))))'/1000);
         Nt = length(mrk2.time)/2;
-        G1 = cat(1,G1,repmat({sprintf('BCI%d',jj)},Nt,1));
+        G1 = cat(1,G1,repmat({phase{jj}},Nt,1));
         G2 = cat(1,G2,repmat(light(kk),Nt,1));
     end
     
