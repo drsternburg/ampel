@@ -42,13 +42,18 @@ end
 Ttot = length(X)/100;
 R = Ttot./Ncr;
 
-%%
 figure
-plot(thresh,Ttot./Ncr)
+plot(thresh,R)
 
-%%
-thresh_move = thresh(find(diff(sign(R(:,1) - target_ISI))==2));
-thresh_idle = thresh(find(diff(sign(R(:,2) - target_ISI))==-2));
+ind = thresh>0;
+thr = thresh(ind);
+thr = thr(find(diff(sign(R(ind,1) - target_ISI))==2));
+thresh_move = thr(1);
+
+ind = thresh<0;
+thr = thresh(ind);
+thr = thr(find(diff(sign(R(ind,2) - target_ISI))==-2));
+thresh_idle = thr(end);
 
 
 
