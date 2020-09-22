@@ -59,6 +59,3 @@ thresh_idle = thr(end);
 
 
 
-
-
-
