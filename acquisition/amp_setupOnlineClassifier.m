@@ -6,9 +6,6 @@ warning off
 
 %% load and prepare self-paced data
 [cnt,mrk,mnt] = proc_loadDataset(subj_code,'selfpaced');
-%%%
-cnt = proc_selectChannels(cnt,'not',{'C2','P3'});
-%%%
 cnt = proc_commonAverageReference(cnt); % because it was converded without CAR
 cnt = proc_selectChannels(cnt,opt.cfy_rp.clab_base);
 must_contain = 'movement onset';

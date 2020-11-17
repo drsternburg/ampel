@@ -29,6 +29,10 @@ for ii = 1:length(cl_orig)
     ci_orig = [ci_orig find(strcmp(mrk.className,cl_orig{ii}))];
 end
 
+if isempty(ci_orig)
+    return
+end
+
 mrk.y(ci_orig(1),:) = sum(mrk.y(ci_orig,:),1);
 mrk.y(ci_orig(2:end),:) = [];
 

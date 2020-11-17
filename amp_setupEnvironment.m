@@ -93,9 +93,8 @@ opt.cfy_rp.ival_fv = [-1400 -1200;
                       -1000  -800;
                        -800  -600;
                        -600  -400;
-                       -400  -200;
-                       -200     0];
-opt.cfy_rp.fv_window = [opt.cfy_rp.ival_fv(1) 0];
+                       -400  -200];
+opt.cfy_rp.fv_window = [opt.cfy_rp.ival_fv(1) opt.cfy_rp.ival_fv(end)];
 
 opt.cfy_rp.ival_amp = [-200 0];
 
