@@ -1,10 +1,8 @@
 
-function T = amp_analyzeTrials(subj_code)
-
 Y = [];
-for ii = 1:length(subj_code)
+for ii = 1:length(subjs_all)
     
-    [~,mrk] = proc_loadDataset(subj_code{ii},'bci');
+    [~,mrk] = proc_loadDataset(subjs_all{ii},'bci','Ampel');
     trial = mrk_getTrialMarkers(mrk);
     
     Nt = length(trial);
